@@ -1,12 +1,31 @@
-
+const porta = 3000
 const express = require('express')
-
 const server = express()
+const bodyParser = require('body-parser')
+const Bd = require('./BD')
 
-server.get('/teste', (req,res) =>{
-    return res.json( { message: 'Hello world' })
+server.use(bodyParser.urlencoded({extends: true}))
+
+server.get('/geeks', (req,res) =>{
+     const usuarios = Bd.getUsuarios()
+     res.send(usuarios)
 })
 
-server.listen(3000, () =>{
-    console.log('Serdior Online.')
+server.get('/geeks/:nome', (req,res) =>{
+    const usuario = Bd.getUsario(req.params.nome)
+    res.send(usuario)
+})
+
+server.post('/geeks', (req, res) =>{
+    const user = {
+        nome: req.body.nome,
+        idade: req.body.idade,
+        sexo: req.body.sexo
+    }
+    Bd.salvarUser(user)
+    res.send(user)
+})
+
+server.listen(porta, () =>{
+    console.log(`Serdior Online, na porta ${porta}!`)
 })
