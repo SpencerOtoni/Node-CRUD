@@ -1,7 +1,7 @@
 const usuarios = []
 
 function getUsario(nome){
-    let user = usuarios.filter((element, index) => { 
+    let user = usuarios.filter((element) => { 
         if(element.nome === nome){
             return element 
         }
@@ -17,14 +17,34 @@ function getUsuarios(){
 }
 
 function index (user){
-    let idx = usuarios.indexOf(user)
+    let idx = -1
+    usuarios.forEach((element, index) => {
+        if(element.nome === user.nome){
+            idx = index
+        }
+    })
     return idx
 }
 
 function salvarUser(user){
-        
+    if(usuarios.length === 0){
         usuarios.push(user)
         return user
+    }else{
+        if(index(user) === -1){
+            usuarios.push(user)
+            return user
+        }else{
+            return'Usuários cadastrados!'
+        }
+    }
 }
 
-module.exports = {salvarUser,getUsuarios, getUsario}
+function deleteUsuario(user){
+    let idx = index(user)
+    let user = usuarios[idx]
+    usuarios.splice(idx,1)
+    return `Usuário ${user.nome}, foi deletado!`
+}
+
+module.exports = {salvarUser,getUsuarios, getUsario, deleteUsuario}

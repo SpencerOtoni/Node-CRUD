@@ -17,13 +17,17 @@ server.get('/geeks/:nome', (req,res) =>{
 })
 
 server.post('/geeks', (req, res) =>{
-    const user = {
+    const usuario = Bd.salvarUser({
         nome: req.body.nome,
         idade: req.body.idade,
         sexo: req.body.sexo
-    }
-    Bd.salvarUser(user)
-    res.send(user)
+    })
+    res.send(usuario)
+})
+
+server.delete('/geeks/:nome', (req, res) =>{
+    const usuario = Bd.deleteUsuario(req.params.nome)
+    res.send(usuario)
 })
 
 server.listen(porta, () =>{
