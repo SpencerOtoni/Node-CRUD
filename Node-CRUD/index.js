@@ -1,23 +1,23 @@
 const porta = 3000
 const express = require('express')
-const server = express()
+const app = express()
 const bodyParser = require('body-parser')
 const Bd = require('./BD')
 
-server.use(bodyParser.urlencoded({extends: true}))
+app.use(bodyParser.urlencoded({extends: true}))
 
-server.get('/geeks', (req,res) =>{
-     const usuarios = Bd.getUsuarios()
+app.get('/geeks', (req,res) =>{
+     const usuarios = Bd.getUsers()
      res.send(usuarios)
 })
 
-server.get('/geeks/:nome', (req,res) =>{
-    const usuario = Bd.getUsario(req.params.nome)
+app.get('/geeks/:nome', (req,res) =>{
+    const usuario = Bd.getUser(req.params.nome)
     res.send(usuario)
 })
 
-server.post('/geeks', (req, res) =>{
-    const usuario = Bd.salvarUser({
+app.post('/geeks', (req, res) =>{
+    const usuario = Bd.saveUser({
         nome: req.body.nome,
         idade: req.body.idade,
         sexo: req.body.sexo
@@ -25,11 +25,20 @@ server.post('/geeks', (req, res) =>{
     res.send(usuario)
 })
 
-server.delete('/geeks/:nome', (req, res) =>{
-    const usuario = Bd.deleteUsuario(req.params.nome)
+app.delete('/geeks/:nome', (req, res) =>{
+    const usuario = Bd.deleteUser(req.params.nome)
     res.send(usuario)
 })
 
-server.listen(porta, () =>{
+app.put('/geeks/:nome', (req, res) =>{
+    const usuario =  Bd.updateUser(req.params.nome,{
+        nome: req.body.nome,
+        idade: req.body.idade,
+        sexo: req.body.sexo
+    })
+    res.send(usuario)
+})
+
+app.listen(porta, () =>{
     console.log(`Serdior Online, na porta ${porta}!`)
 })
