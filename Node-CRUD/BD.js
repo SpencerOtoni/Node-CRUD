@@ -62,10 +62,10 @@ function deleteUser(nome){
 }
 
 function updateUser(nome, user){
-    if(UserCadastrado(user)){
-        let idx = indexUsuario(nome)
+    let idx = indexUsuario(nome)
+    if(idx != -1){
         usuarios[idx] = user
-        return user
+        return usuarios[idx]
     }else{
         return `Usuário não cadastrado!`
     } 
