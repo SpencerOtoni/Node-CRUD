@@ -1,7 +1,6 @@
 const usuarios = []
 
 function getUser(req,res){
-    console.log(req.params.nome)
     let user = usuarios.filter((element) => { 
         
         if(element.nome === req.params.nome){
